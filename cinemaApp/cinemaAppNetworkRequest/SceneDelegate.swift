@@ -29,7 +29,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         favouriteFilmsScreenNavigationController.navigationBar.barTintColor = Colors.mainGray
         
         tabBarController.viewControllers = [mainScreenNavigationController, favouriteFilmsScreenNavigationController]
-        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }

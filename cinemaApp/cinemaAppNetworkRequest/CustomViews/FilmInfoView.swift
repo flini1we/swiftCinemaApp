@@ -40,7 +40,7 @@ class FilmInfoView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colors.lighterGray
-        label.font = .systemFont(ofSize: Fonts.small)
+        label.font = UIFont(name: "Montserrat-Medium", size: Fonts.small)
         return label
     }()
     
@@ -50,7 +50,7 @@ class FilmInfoView: UIView {
             calendarTitle,
         ])
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = Constants.nothing
+        stack.spacing = Constants.nothing / 2
         return stack
     }()
     
@@ -65,7 +65,7 @@ class FilmInfoView: UIView {
         let clock = UILabel()
         clock.translatesAutoresizingMaskIntoConstraints = false
         clock.textColor = Colors.lighterGray
-        clock.font = .systemFont(ofSize: Fonts.small)
+        clock.font = UIFont(name: "Montserrat-Medium", size: Fonts.small)
         return clock
     }()
     
@@ -74,7 +74,7 @@ class FilmInfoView: UIView {
         duration.text = "Минут"
         duration.translatesAutoresizingMaskIntoConstraints = false
         duration.textColor = Colors.lighterGray
-        duration.font = .systemFont(ofSize: Fonts.small)
+        duration.font = UIFont(name: "Montserrat-Medium", size: Fonts.small)
         return duration
     }()
     
@@ -85,7 +85,7 @@ class FilmInfoView: UIView {
             minutesLabel
         ])
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = Constants.nothing
+        stack.spacing = Constants.nothing / 2
         return stack
     }()
     
@@ -101,7 +101,7 @@ class FilmInfoView: UIView {
         country.font = .systemFont(ofSize: Fonts.small)
         country.translatesAutoresizingMaskIntoConstraints = false
         country.textColor = Colors.lighterGray
-        country.font = .systemFont(ofSize: Fonts.tiny)
+        country.font = UIFont(name: "Montserrat-Medium", size: Fonts.small)
         return country
     }()
     
@@ -111,7 +111,7 @@ class FilmInfoView: UIView {
             countryTitle,
         ])
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = Constants.nothing
+        stack.spacing = Constants.nothing / 2
         return stack
     }()
     
@@ -123,7 +123,7 @@ class FilmInfoView: UIView {
             secondVerticalSeparator,
             countryInfoStackView
         ])
-        stack.spacing = Constants.tiny
+        stack.spacing = Constants.ultraTiny
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()

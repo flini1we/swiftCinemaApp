@@ -12,7 +12,7 @@ class PlayTrailerView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: Fonts.tiny)
+        label.font = UIFont(name: "Montserrat-Medium", size: Fonts.tiny)
         label.textColor = .white
         label.text = "Трейлер"
         return label

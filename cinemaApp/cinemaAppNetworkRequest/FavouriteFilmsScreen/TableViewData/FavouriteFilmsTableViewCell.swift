@@ -21,7 +21,7 @@ class FavouriteFilmsTableViewCell: UITableViewCell {
     private lazy var filmTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-Black", size: Fonts.big)
+        label.font = UIFont(name: "Montserrat-Bold", size: Fonts.big)
         label.textColor = .white
         return label
     }()
@@ -44,7 +44,7 @@ class FavouriteFilmsTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colors.lighterGray
-        label.font = UIFont(name: "Poppins-Regular", size: Fonts.tiny)
+        label.font = UIFont(name: "Montserrat-Medium", size: Fonts.tiny)
         return label
     }()
 
@@ -69,7 +69,7 @@ class FavouriteFilmsTableViewCell: UITableViewCell {
         let clock = UILabel()
         clock.translatesAutoresizingMaskIntoConstraints = false
         clock.textColor = Colors.lighterGray
-        clock.font = UIFont(name: "Poppins-Regular", size: Fonts.tiny)
+        clock.font = UIFont(name: "Montserrat-Medium", size: Fonts.tiny)
         return clock
     }()
 
@@ -78,7 +78,7 @@ class FavouriteFilmsTableViewCell: UITableViewCell {
         duration.text = "Минут"
         duration.translatesAutoresizingMaskIntoConstraints = false
         duration.textColor = Colors.lighterGray
-        duration.font = UIFont(name: "Poppins-Regular", size: Fonts.tiny)
+        duration.font = UIFont(name: "Montserrat-Medium", size: Fonts.tiny)
         return duration
     }()
 
@@ -102,7 +102,7 @@ class FavouriteFilmsTableViewCell: UITableViewCell {
 
     private lazy var countryTitle: UILabel = {
         let country = UILabel()
-        country.font = UIFont(name: "Poppins-Regular", size: Fonts.tiny)
+        country.font = UIFont(name: "Montserrat-Medium", size: Fonts.tiny)
         country.translatesAutoresizingMaskIntoConstraints = false
         country.textColor = Colors.lighterGray
 

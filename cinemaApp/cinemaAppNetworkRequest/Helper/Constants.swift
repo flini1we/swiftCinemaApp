@@ -32,4 +32,6 @@ struct Constants {
     static let huge: CGFloat = 100
     /// Constant of size 150
     static let giant: CGFloat = 150
+    /// Constant of size 155
+    static let citySize: CGFloat = 165
 }

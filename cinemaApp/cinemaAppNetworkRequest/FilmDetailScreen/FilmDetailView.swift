@@ -15,7 +15,7 @@ class FilmDetailView: UIView {
     
     private weak var delegate: PlayTrailerDelegate?
     private var prettyDescription: String!
-    private let dataSource = ["О фильме", "Актеры"]
+    private let dataSource = ["Описание", "Актеры"]
     private var currentFilm: FilmWithInfo!
     private var selectedIndex = 0
     private var underlineWidth = UIScreen.main.bounds.width / 2 - Constants.tiny
@@ -64,7 +64,7 @@ class FilmDetailView: UIView {
     
     private lazy var filmTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Black", size: Fonts.big)
+        label.font = UIFont(name: "Montserrat-Bold", size: Fonts.big)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = .zero
         label.textAlignment = .left
@@ -104,7 +104,7 @@ class FilmDetailView: UIView {
     private lazy var filmDescriptionTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-Black", size: Fonts.big)
+        label.font = UIFont(name: "Montserrat-Bold", size: Fonts.big)
         label.textColor = Colors.lighterGray
         label.text = "Про фильм"
         return label
@@ -139,7 +139,7 @@ class FilmDetailView: UIView {
     private lazy var filmDescriptionText: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-Regular", size: Fonts.medium)
+        label.font = UIFont(name: "Montserrat-Medium", size: Fonts.medium)
         label.textColor = .white
         label.numberOfLines = .zero
         return label
@@ -352,7 +352,7 @@ extension FilmDetailView: UICollectionViewDelegate, UICollectionViewDataSource {
             collectionView.reloadData()
             self?.underlineView.backgroundColor = Colors.lighterGray
         } completion: { [weak self] _ in
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.25) {
                 guard let self else { return }
                 self.underlineLeadingConstraint.constant = newLeadingConstant
                 self.layoutIfNeeded()

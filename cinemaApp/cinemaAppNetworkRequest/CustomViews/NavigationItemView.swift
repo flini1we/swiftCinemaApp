@@ -12,7 +12,7 @@ class NavigationItemView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-SemiBold", size: Fonts.big)
+        label.font = UIFont(name: "Montserrat-Bold", size: Fonts.big)
         label.textColor = .white
         return label
     }()

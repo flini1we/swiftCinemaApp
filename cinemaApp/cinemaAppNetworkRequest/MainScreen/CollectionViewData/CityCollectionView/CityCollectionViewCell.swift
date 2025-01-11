@@ -20,8 +20,9 @@ class CityCollectionViewCell: UICollectionViewCell {
     
     private lazy var title: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: "Montserrat-Medium", size: Fonts.small)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-Regular", size: Fonts.small)
+        label.textColor = .black
         return label
     }()
     
@@ -53,8 +54,10 @@ class CityCollectionViewCell: UICollectionViewCell {
             grayView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             grayView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            title.centerXAnchor.constraint(equalTo: grayView.centerXAnchor),
-            title.centerYAnchor.constraint(equalTo: grayView.centerYAnchor),
+            title.topAnchor.constraint(equalTo: grayView.topAnchor, constant: Constants.nothing),
+            title.leadingAnchor.constraint(equalTo: grayView.leadingAnchor, constant: Constants.nothing),
+            title.trailingAnchor.constraint(equalTo: grayView.trailingAnchor, constant: -Constants.nothing),
+            title.bottomAnchor.constraint(equalTo: grayView.bottomAnchor, constant: -Constants.nothing),
         ])
     }
 }

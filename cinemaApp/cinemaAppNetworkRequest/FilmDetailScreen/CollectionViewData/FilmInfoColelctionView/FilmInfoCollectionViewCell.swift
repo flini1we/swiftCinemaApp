@@ -12,7 +12,7 @@ class FilmInfoCollectionViewCell: UICollectionViewCell {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Poppins-Black", size: Fonts.title)
+        label.font = UIFont(name: "Montserrat-Bold", size: Fonts.title)
         return label
     }()
 

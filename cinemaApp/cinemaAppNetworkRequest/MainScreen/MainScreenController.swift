@@ -35,14 +35,24 @@ class MainScreenController: UIViewController {
         view = MainScreenView(cityCollectionViewDelegate: self, searchFilmDelegate: self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionViewData()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
+
+    func setCollectionViewHeight() {
+        let quantity = (selectedCity == nil) ? downloadedFilms.count
+                                             : anothetCititesFilms.count
+        let numberOfRows = (quantity % 3 == 0) ? quantity / 3
+                                               : quantity / 3 + 1
+        /// Constants.screenWidth / 2.25 - filmCollectionView item height; Constants.ultraTiny / 2 - lineSpacing in CV
+        let height = CGFloat(numberOfRows) * (Constants.screenWidth / 2.25 + Constants.ultraTiny)
+        customView.setFilmsCollectionViewHeight(height: height + 2 * Constants.ultraTiny)
     }
 
     private func setupNavigationBar() {
@@ -69,6 +79,7 @@ class MainScreenController: UIViewController {
 
             customView.setDelegateToFilmsCollecitonView(filmsCollectionViewDelegate: filmsCollectionViewDelegate!)
             dataManager.updateValueAfterSaving()
+            setCollectionViewHeight()
         }
     }
 }
@@ -135,6 +146,8 @@ extension MainScreenController: SearchFilmDelegate {
                     filmDetailScreenNavigationController.transitioningDelegate = self
                     filmDetailScreenNavigationController.navigationBar.barTintColor = Colors.mainGray
                     self.present(filmDetailScreenNavigationController, animated: true)
+                    
+                    customView.clearSearchBar()
                 }
             }
         } else {
@@ -161,10 +174,10 @@ extension MainScreenController: DidTapOnPopularFilmDelegate {
 
 extension MainScreenController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        TransitionAnimator(duration: 1.2, transitionMode: .present)
+        TransitionAnimator(duration: 0.8, transitionMode: .present)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        TransitionAnimator(duration: 1.2, transitionMode: .dismiss)
+        TransitionAnimator(duration: 0.8, transitionMode: .dismiss)
     }
 }

@@ -98,10 +98,10 @@ class FilmDetailController: UIViewController {
     }
 
     private func setupCloseControllerAnimator(button: UIButton) {
-        closeControllerAnimator = UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut) {
+        closeControllerAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
             button.transform = CGAffineTransform(rotationAngle: .pi)
         }
-        let secondAnimator = UIViewPropertyAnimator(duration: 0.65, curve: .easeInOut) {
+        let secondAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             let rotation = CGAffineTransform(rotationAngle: .pi * -2)
             let scale = CGAffineTransform(scaleX: 2, y: 2)
             button.transform = rotation.concatenating(scale)
