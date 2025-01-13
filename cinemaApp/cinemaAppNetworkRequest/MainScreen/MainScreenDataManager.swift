@@ -10,18 +10,16 @@ import CoreData
 
 class MainScreenDataManager {
     
+    private(set) var currentPage: Int = 1
     private let networkManager = NetworkManager(with: .default)
     private let coreDataManager = CoreDataManager.shared
     private let userDefaults = UserDefaults.standard
     private let loadDataKey = "did_load_data"
     
-    func didLoadData() -> Bool {
-        return userDefaults.bool(forKey: loadDataKey)
-    }
-    
-    func updateValueAfterSaving() {
-        userDefaults.set(true, forKey: loadDataKey)
-    }
+    func didLoadData() -> Bool { userDefaults.bool(forKey: loadDataKey) }
+    func updateValueAfterSaving() { userDefaults.set(true, forKey: loadDataKey) }
+    func updatePage() { currentPage += 1 }
+    func backToDefaultPage() { currentPage = 1 }
     
     func obtainPopularFilms() async -> [Film] {
         if didLoadData() {
@@ -29,7 +27,7 @@ class MainScreenDataManager {
             return films
         } else {
             do {
-                let downloadedFilms = try await networkManager.obtainFilms()
+                let downloadedFilms = try await networkManager.obtainFilmsOnPage(page: 1)
                 let filteredFilms = Array(downloadedFilms.sorted { $0.id > $1.id }.prefix(10))
                 coreDataManager.saveFilms(films: filteredFilms)
                 return filteredFilms
@@ -42,7 +40,7 @@ class MainScreenDataManager {
     
     func obtainFilms() async -> [Film] {
         do {
-            return try await networkManager.obtainFilms()
+            return try await networkManager.obtainFilmsOnPage(page: currentPage)
         } catch {
             print("Error of loading films from network: \(error.localizedDescription)")
             return []

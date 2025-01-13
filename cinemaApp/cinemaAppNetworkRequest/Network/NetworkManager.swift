@@ -8,7 +8,10 @@
 import Foundation
 
 struct URLs {
-    static let obtailOriginallFilms = "https://kudago.com/public-api/v1.4/movies/"
+
+    static func obtainFilmsOnPage(page: Int) -> String {
+        "https://kudago.com/public-api/v1.4/movies/?page=\(page)"
+    }
     static let obtainCities = "https://kudago.com/public-api/v1.2/locations/?lang=ru"
     static func obtainFilmsInSelectedCity(citySlug: String) -> String {
         return "https://kudago.com/public-api/v1.4/movies/?location=\(citySlug)"
@@ -28,8 +31,8 @@ class NetworkManager {
         session = URLSession(configuration: configuration)
     }
     
-    func obtainFilms() async throws -> [Film] {
-        guard let url = URL(string: URLs.obtailOriginallFilms) else { return [] }
+    func obtainFilmsOnPage(page: Int) async throws -> [Film] {
+        guard let url = URL(string: URLs.obtainFilmsOnPage(page: page)) else { return [] }
         
         let urlRequest = URLRequest(url: url)
         let responceData = try await session.data(for: urlRequest)

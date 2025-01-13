@@ -33,11 +33,7 @@ class CollectionViewDiffableDataSource: NSObject {
             
             return cell
         })
-        applyDefaultFilmsSnapshot(with: films)
-    }
-    
-    func getItem(at index: IndexPath) -> Film? {
-        dataSource?.itemIdentifier(for: index)
+        applyDefaultFilmsSnapshot(with: films, shouldCreateSnapshot: true)
     }
     
     func applyPopularFilmsSnapshot(with films: [Film]) {
@@ -49,12 +45,15 @@ class CollectionViewDiffableDataSource: NSObject {
         dataSource?.apply(snapsot, animatingDifferences: false)
     }
     
-    func applyDefaultFilmsSnapshot(with films: [Film]) {
-        var snapsot = NSDiffableDataSourceSnapshot<CollectionViewSections, Film>()
-        
-        snapsot.appendSections([.defaultFilms])
-        snapsot.appendItems(films)
-        
-        dataSource?.apply(snapsot, animatingDifferences: true)
+    func applyDefaultFilmsSnapshot(with films: [Film], shouldCreateSnapshot: Bool) {
+        var snapshot: NSDiffableDataSourceSnapshot<CollectionViewSections, Film>!
+        if shouldCreateSnapshot {
+            snapshot = NSDiffableDataSourceSnapshot<CollectionViewSections, Film>()
+            snapshot?.appendSections([.defaultFilms])
+        } else {
+            snapshot = dataSource!.snapshot()
+        }
+        snapshot.appendItems(films)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
