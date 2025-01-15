@@ -14,6 +14,7 @@ class FilmRatingView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = Constants.ultraTiny
         view.backgroundColor = Colors.ratingBGColor
+        view.alpha = 0.8
         return view
     }()
     

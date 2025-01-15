@@ -9,7 +9,7 @@ import UIKit
 
 class FavouriteFilmsView: UIView, UITableViewDelegate {
     
-    private lazy var favouriteFilmsTableView: UITableView = {
+    lazy var favouriteFilmsTableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.rowHeight = Constants.screenWidth / 2
@@ -34,8 +34,8 @@ class FavouriteFilmsView: UIView, UITableViewDelegate {
         favouriteFilmsTableView.reloadData()
     }
     
-    func setDataSource(dataSource: FavouriteFilmsTableViewDataSource) {
-        favouriteFilmsTableView.dataSource = dataSource
+    func setDataSourceToFavouriteFilmsTableView(datasource: UITableViewDataSource) {
+        favouriteFilmsTableView.dataSource = datasource
     }
     
     private func setup() {

@@ -8,32 +8,38 @@
 import UIKit
 import CoreData
 
-class FavouriteFilmsController: UIViewController, NSFetchedResultsControllerDelegate {
+class FavouriteFilmsController: UIViewController {
 
     private var customView: FavouriteFilmsView {
         view as! FavouriteFilmsView
     }
-    private let coreDataManager = CoreDataManager.shared
-    private var dataSource: FavouriteFilmsTableViewDataSource?
+    private let dataManager = FavouriteFilmsDataManager()
     private var fetchedResultController: NSFetchedResultsController<FavouriteFilmEntity>!
     
     override func loadView() {
         super.loadView()
         view = FavouriteFilmsView()
-        coreDataManager.setDelegate(updateFavouriteFilmsDelegate: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableWithCachedData()
+    }
+    
+    private func updateTableWithCachedData() {
+        do {
+            try fetchedResultController.performFetch()
+            customView.favouriteFilmsTableView.reloadData()
+        } catch {
+            print("Fetch request failed with error: \(error)")
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchedResultController = coreDataManager.createNSFetchedResultController()
+        fetchedResultController = dataManager.createNSFetchedResultController()
         fetchedResultController.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        updateTableData()
     }
     
     init() {
@@ -43,16 +49,6 @@ class FavouriteFilmsController: UIViewController, NSFetchedResultsControllerDele
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func updateTableData() {
-        do {
-            try fetchedResultController.performFetch()
-            dataSource?.updateData(films: coreDataManager.obtainFavouriteFilms())
-            customView.reloadData()
-        } catch {
-            print("Failed during fetching data: \(error.localizedDescription)")
-        }
     }
     
     private func setup() {
@@ -66,14 +62,48 @@ class FavouriteFilmsController: UIViewController, NSFetchedResultsControllerDele
     }
     
     private func setupDataSource() {
-        let favFilms = coreDataManager.obtainFavouriteFilms()
-        dataSource = FavouriteFilmsTableViewDataSource(withFavFilms: favFilms)
-        customView.setDataSource(dataSource: dataSource!)
+        customView.setDataSourceToFavouriteFilmsTableView(datasource: self)
     }
 }
 
-extension FavouriteFilmsController: UpdateFavouriteFilmsDelegate {
-    func updateFavouriteFilms() {
-        updateTableData()
+extension FavouriteFilmsController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        customView.favouriteFilmsTableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        customView.favouriteFilmsTableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<any NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete, .update:
+            if let indexPath = indexPath {
+                customView.favouriteFilmsTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        default:
+            break
+        }
+    }
+    
+}
+
+extension FavouriteFilmsController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchedResultController.sections?[section].numberOfObjects ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: FavouriteFilmsTableViewCell.identifier, for: indexPath) as! FavouriteFilmsTableViewCell
+        let favouriteFilmEntity = fetchedResultController.object(at: indexPath)
+        let favouriteFilm = FavouriteFilm(poster: Poster(image: favouriteFilmEntity.imagePath?.base64EncodedString() ?? ""),
+                                          title: favouriteFilmEntity.title ?? "no title",
+                                          rating: favouriteFilmEntity.rating,
+                                          year: favouriteFilmEntity.year,
+                                          runningTime: favouriteFilmEntity.runningTime,
+                                          country: favouriteFilmEntity.country ?? "no country")
+        cell.setupWithFilm(favouriteFilm)
+        cell.isUserInteractionEnabled = false
+        return cell
     }
 }

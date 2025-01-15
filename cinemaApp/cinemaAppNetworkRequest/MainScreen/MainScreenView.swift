@@ -162,7 +162,6 @@ class MainScreenView: UIView {
     func getFilmsCollectionView() -> UICollectionView { filmsCollectionView }
     func dismissKeyboard() { searchBar.resignFirstResponder() }
     func getWrongTitleAlert() -> UIAlertController { wrongFilmTitleAlert }
-    func getConfirmToScrollCollectionViewAlert() -> UIAlertController { confirmToScrollCollectionViewAlert }
     
     func clearSearchBar() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -207,7 +206,7 @@ class MainScreenView: UIView {
             
             popularFilmsCollectionView.heightAnchor.constraint(equalToConstant: Constants.screenWidth / 1.5),
             citiesCollectionView.heightAnchor.constraint(equalToConstant: Constants.little),
-            //filmsCollectionView.heightAnchor.constraint(equalToConstant: 200)
+
         ])
     }
 }

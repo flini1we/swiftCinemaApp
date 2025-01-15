@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 enum TableSections {
     case main
@@ -13,4 +14,9 @@ enum TableSections {
 
 class FavouriteFilmsDataManager {
     
+    private let coreData = CoreDataManager.shared
+
+    func createNSFetchedResultController() -> NSFetchedResultsController<FavouriteFilmEntity> {
+        coreData.createNSFetchedResultController()
+    }
 }

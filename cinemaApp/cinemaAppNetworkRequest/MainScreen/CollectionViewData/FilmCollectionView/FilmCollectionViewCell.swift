@@ -51,7 +51,6 @@ class FilmCollectionViewCell: UICollectionViewCell {
     func configurePopularFilm(_ film: Film, at position: Int, didLoadData: Bool) {
         loadingIndicator.startAnimating()
         filmPosition.image = UIImage(named: "\(position)")
-        
         setupWithPositionImage()
         
         loadImageTask = Task {

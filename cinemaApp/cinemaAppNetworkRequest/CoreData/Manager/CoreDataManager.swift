@@ -8,31 +8,14 @@
 import Foundation
 import CoreData
 
-protocol UpdateFavouriteFilmsDelegate: AnyObject {
-    func updateFavouriteFilms()
-}
-
-protocol UpdatePopularFilmsCollectionViewDelegate: AnyObject {
-    func updateCollectionView()
-}
-
 class CoreDataManager {
     
-    private weak var favouriteFilmsDelegate: UpdateFavouriteFilmsDelegate?
     static let shared = CoreDataManager()
     
-    var viewContext: NSManagedObjectContext {
-        persistentContainer.viewContext
-    }
-    var backgroundContext: NSManagedObjectContext {
-        persistentContainer.newBackgroundContext()
-    }
+    var viewContext: NSManagedObjectContext { persistentContainer.viewContext }
+    var backgroundContext: NSManagedObjectContext { persistentContainer.newBackgroundContext() }
     
     private init() { }
-    
-    func setDelegate(updateFavouriteFilmsDelegate: UpdateFavouriteFilmsDelegate) {
-        self.favouriteFilmsDelegate = updateFavouriteFilmsDelegate
-    }
     
     func createNSFetchedResultController() -> NSFetchedResultsController<FavouriteFilmEntity> {
         let favouriteFilmRequest = FavouriteFilmEntity.fetchRequest()
@@ -150,11 +133,9 @@ class CoreDataManager {
                 do {
                     try backgroundContext.save()
                     
-                    viewContext.performAndWait { [weak self] in
-                        guard let self else { return }
+                    viewContext.performAndWait {
                         do {
                             try viewContext.save()
-                            favouriteFilmsDelegate?.updateFavouriteFilms()
                         } catch {
                             print("Error saving to viewContext: \(error)")
                         }
@@ -168,8 +149,7 @@ class CoreDataManager {
     
     func removeFavouriteFilm(film: FavouriteFilm) {
         let backgroundContext = backgroundContext
-        backgroundContext.perform { [weak viewContext] in
-            guard let viewContext else { return }
+        backgroundContext.perform {
             
             let fetchRequest = FavouriteFilmEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "title == %@", film.title)
@@ -182,13 +162,11 @@ class CoreDataManager {
                     do {
                         try backgroundContext.save()
                         
-                        viewContext.performAndWait { [weak self] in
-                            guard let self else { return }
+                        self.viewContext.performAndWait {
                             do {
-                                try viewContext.save()
-                                favouriteFilmsDelegate?.updateFavouriteFilms()
+                                try self.viewContext.save()
                             } catch {
-                                print("Error saving viewContext after delete: \(error)")
+                                print(1)
                             }
                         }
                     } catch {
